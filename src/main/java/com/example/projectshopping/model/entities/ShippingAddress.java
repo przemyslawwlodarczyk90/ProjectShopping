@@ -1,13 +1,15 @@
-package com.example.projectshopping.model.enitiies;
+package com.example.projectshopping.model.entities;
 
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Embeddable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address {
+public class ShippingAddress {
 
     private String street;
 
