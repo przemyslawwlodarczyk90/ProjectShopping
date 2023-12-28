@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -46,6 +47,14 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private AdminOrUser adminOrUser;
+
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
 
     @OneToMany
     private List<Order> orders;

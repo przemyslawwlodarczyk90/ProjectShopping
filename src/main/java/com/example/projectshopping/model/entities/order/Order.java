@@ -7,8 +7,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -34,7 +37,18 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Column(name = "sent_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sentAt;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate creationDate;
+
+
 
     public Order(User customer, ShippingAddress shippingAddress, List<LineOfOrder> lineOfOrders) {
         this.customer = customer;
