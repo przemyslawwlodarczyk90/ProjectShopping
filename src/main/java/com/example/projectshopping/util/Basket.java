@@ -10,34 +10,35 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Basket {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private List<LineOfOrder> lineOfOrders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LineOfOrder> lineOfOrders;
-
-    public void addProduct(Product product) {
-        LineOfOrder lineOfOrder = new LineOfOrder();
-        lineOfOrder.setProduct(product);
-        lineOfOrder.setQuantity(1); // Assuming a quantity of 1 for each product added
-        this.lineOfOrders.add(lineOfOrder);
-        lineOfOrder.setBasket(this);
+    public void addLineOfOrder(LineOfOrder lineOfOrder) {
+        lineOfOrders.add(lineOfOrder);
     }
 
-    public Order createOrder(User customer, ShippingAddress shippingAddress, List<LineOfOrder> orderLines) {
+    public Order createOrder() {
         Order order = new Order();
-        order.setCustomer(customer);
-        order.setShippingAddress(shippingAddress);
-        order.setLineOfOrders(orderLines);
+        order.setLineOfOrders(lineOfOrders);
         return order;
+    }
+
+    public List<LineOfOrder> getLineOfOrders() {
+        return lineOfOrders;
+    }
+
+    public void clear() {
+        lineOfOrders.clear();
     }
 }

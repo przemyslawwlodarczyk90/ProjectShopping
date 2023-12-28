@@ -47,7 +47,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AdminOrUser adminOrUser;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Order> orders;
 
     public User(String email, String passwordHash, String avatarPath, String firstName, String lastName) {

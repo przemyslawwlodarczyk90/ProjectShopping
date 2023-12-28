@@ -1,5 +1,6 @@
 package com.example.projectshopping.model.entities.order;
 
+import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.entities.user.User;
 import com.example.projectshopping.model.enums.OrderStatus;
 import jakarta.persistence.*;
@@ -22,7 +23,6 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User customer;
 
     @Embedded
