@@ -1,6 +1,6 @@
 package com.example.projectshopping.util;
 
-import com.example.projectshopping.model.entities.User;
+import com.example.projectshopping.model.entities.user.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;

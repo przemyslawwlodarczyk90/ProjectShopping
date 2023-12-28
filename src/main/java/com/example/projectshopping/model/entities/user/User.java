@@ -1,23 +1,22 @@
-package com.example.projectshopping.model.entities;
+package com.example.projectshopping.model.entities.user;
 
+import com.example.projectshopping.model.entities.order.Order;
 import com.example.projectshopping.model.enums.AdminOrUser;
 import com.example.projectshopping.util.PasswordManager;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
+
 
 import java.util.List;
 
 @Entity
-@Component
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
@@ -66,4 +65,13 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public UserAddress getAddress() {
+        return address;
+    }
+
+    public void setAddress(UserAddress address) {
+        this.address = address;
+    }
+
 }

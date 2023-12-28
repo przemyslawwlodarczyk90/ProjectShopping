@@ -1,4 +1,4 @@
-package com.example.projectshopping.model.entities;
+package com.example.projectshopping.model.entities.product;
 
 import jakarta.persistence.*;
 import lombok.Data;

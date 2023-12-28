@@ -1,4 +1,4 @@
-package com.example.projectshopping.model.entities;
+package com.example.projectshopping.model.entities.user;
 
 import com.example.projectshopping.model.enums.AdminOrUser;
 import com.example.projectshopping.util.PasswordManager;

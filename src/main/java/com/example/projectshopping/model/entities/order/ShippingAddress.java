@@ -1,4 +1,4 @@
-package com.example.projectshopping.model.entities;
+package com.example.projectshopping.model.entities.order;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
