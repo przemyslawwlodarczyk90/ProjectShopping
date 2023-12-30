@@ -14,7 +14,6 @@ import java.util.Date;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products")
 public class Product {
@@ -23,38 +22,30 @@ public class Product {
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long id;
 
- @Column(name = "title")
- private String title;
-
- @Column(name = "description")
- private String description;
-
- @Column(name = "miniature")
- private String miniature;
-
+ @ManyToOne
+ @JoinColumn(name = "author_id")
  private AuthorEmbeddable author;
 
+ @ManyToOne
+ @JoinColumn(name = "category_id")
  private CategoryEmbeddable category;
 
- @Column(name = "price")
+ private String title;
+
+ private String description;
+
+ private String miniature;
+
  private BigDecimal price;
 
- @Enumerated(EnumType.STRING)
  private ProductType productType;
 
- @Column(name = "quantity")
  private int quantity;
 
- @Column(name = "created_at")
- @Temporal(TemporalType.TIMESTAMP)
- private Date createdAt;
+ public Product() {
+ }
 
- @Column(name = "updated_at")
- @Temporal(TemporalType.TIMESTAMP)
- private Date updatedAt;
-
- public Product(String title, String description, String miniature, AuthorEmbeddable author, CategoryEmbeddable category,
-                BigDecimal price, ProductType productType, int quantity) {
+ public Product(String title, String description, String miniature, AuthorEmbeddable author, CategoryEmbeddable category, BigDecimal price, ProductType productType, int quantity) {
   this.title = title;
   this.description = description;
   this.miniature = miniature;
