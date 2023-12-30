@@ -3,6 +3,8 @@ package com.example.projectshopping.model.entities.order;
 import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.entities.user.User;
 import com.example.projectshopping.model.enums.OrderStatus;
+
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,13 +13,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "orders")
 public class Order {
 
@@ -25,44 +26,33 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
     private User customer;
 
-    @Embedded
-    private ShippingAddress shippingAddress;
+    @Enumerated(EnumType.ORDINAL)
+    private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order")
-    private List<LineOfOrder> lineOfOrders;
-
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    @Column(name = "date_created")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateCreated;
 
     @Column(name = "sent_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date sentAt;
-
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDate creationDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate sentAt;
 
 
 
-    public Order(User customer, ShippingAddress shippingAddress, List<LineOfOrder> lineOfOrders) {
-        this.customer = customer;
-        this.shippingAddress = shippingAddress;
-        this.lineOfOrders = lineOfOrders;
-        this.status = OrderStatus.NEW_ORDER;
-        this.creationDate = LocalDate.now();
-    }
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    private List<LineOfOrder> lineOfOrders;
 
-    public BigDecimal calculateTotalCost() {
-        BigDecimal totalCost = BigDecimal.ZERO;
+    private BigDecimal totalPrice;
+
+    public void calculateTotalPrice(List<LineOfOrder> lineOfOrders) {
+        BigDecimal totalPrice = BigDecimal.ZERO;
         for (LineOfOrder lineOfOrder : lineOfOrders) {
-            totalCost = totalCost.add(lineOfOrder.getUnitPrice().multiply(new BigDecimal(lineOfOrder.getQuantity())));
+            totalPrice = totalPrice.add(lineOfOrder.getUnitPrice().multiply(new BigDecimal(lineOfOrder.getQuantity())));
         }
-        return totalCost;
+        this.totalPrice = totalPrice;
     }
 }

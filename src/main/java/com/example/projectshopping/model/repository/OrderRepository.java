@@ -14,21 +14,34 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long>,
         CrudRepository<Order, Long> {
 
+
+    // Filter orders by customer ID
     List<Order> findAllByCustomerId(long customerId);
 
-    List<Order> findAllByStatus(OrderStatus status);
+    // Filter orders by status
+    List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
+    // Filter orders by date created between specified dates
     List<Order> findAllByDateCreatedBetween(LocalDate fromDate, LocalDate toDate);
 
+    // Retrieves an order by its ID
     Order findById(long id);
 
+    // Saves an order to the database
     Order save(Order order);
 
+    // Deletes an order from the database
     void delete(Order order);
 
-    List<Order> findAllByTotalAmountGreaterThan(BigDecimal totalAmount);
+    // Filters orders by total amount greater than a specified value
+    List<Order> findAllByTotalPriceGreaterThan(BigDecimal totalPrice);
 
-    List<Order> findAllByTotalAmountLessThan(BigDecimal totalAmount);
+    // Filters orders by total amount less than a specified value
+    List<Order> findAllByTotalPriceLessThan(BigDecimal totalPrice);
 
-    List<Order> findAllByTotalAmountBetween(BigDecimal fromAmount, BigDecimal toAmount);
+    // Filters orders by total amount between specified values
+    List<Order> findAllByTotalPriceBetween(BigDecimal fromPrice, BigDecimal toPrice);
+
+    // Filters orders by total amount greater than a specified value and sorts them by date created in descending order
+
 }
