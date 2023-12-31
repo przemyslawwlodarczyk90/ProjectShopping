@@ -18,7 +18,8 @@ public class PasswordManager {
 
     public String encode(String password) {
         String salt = UUID.randomUUID().toString();
-        return passwordEncoder.encode(password + salt);
+        String hashedPassword = passwordEncoder.encode(password + salt);
+        return hashedPassword;
     }
 
     public void verifyPassword(String rawPassword, String hashedPassword) {

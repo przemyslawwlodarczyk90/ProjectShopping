@@ -4,6 +4,7 @@ package com.example.projectshopping.service;
         import com.example.projectshopping.model.entities.order.Order;
 
         import com.example.projectshopping.model.repository.OrderRepository;
+        import com.example.projectshopping.model.repository.UserRepository;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Service;
 
@@ -16,6 +17,10 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    public List<Order> findAllOrder;
 
     public List<Order> findAllOrdersByCustomerId(Long customerId) {
         return orderRepository.findAllByCustomerId(customerId);

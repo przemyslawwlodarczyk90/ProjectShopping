@@ -15,9 +15,8 @@ import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -25,12 +24,13 @@ public class User {
     private Long id;
 
     @Email
+    @Column(unique = true)
     private String email;
 
-    @Column(name = "name")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "surname")
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "password_hash")
@@ -56,7 +56,7 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
     public User(String email, String passwordHash, String avatarPath, String firstName, String lastName) {
@@ -75,12 +75,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public UserAddress getAddress() {
-        return address;
+    public User addOrder(Order order) {
+        this.orders.add(order);
+        return this;
     }
 
     public void setAddress(UserAddress address) {
         this.address = address;
     }
-
 }

@@ -3,6 +3,7 @@ package com.example.projectshopping.controller;
 import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.repository.ProductRepository;
 
+import com.example.projectshopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/products")
     public String listProducts(Model model) {
         List<Product> products = (List<Product>) productRepository.findAll();
@@ -30,6 +34,12 @@ public class ProductController {
         model.addAttribute("product", new Product());
         // Dodaj tu inne potrzebne atrybuty, np. listy dla dropdownów
         return "addProduct";
+    }
+    @GetMapping("/products")
+    public String listProducts(@RequestParam(name = "viewType", defaultValue = "grid") String viewType, Model model) {
+        List<Product> products = productService.findAllProducts();
+        model.addAttribute("products", products);
+        return viewType.equals("list") ? "products_list" : "products_grid";
     }
 
     @GetMapping("/searchProducts")
