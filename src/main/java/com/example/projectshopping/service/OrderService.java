@@ -2,12 +2,12 @@
 package com.example.projectshopping.service;
 
         import com.example.projectshopping.model.entities.order.Order;
-        import com.example.projectshopping.model.enums.OrderStatus;
+
         import com.example.projectshopping.model.repository.OrderRepository;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Service;
 
-        import java.math.BigDecimal;
+
         import java.time.LocalDate;
         import java.util.List;
 

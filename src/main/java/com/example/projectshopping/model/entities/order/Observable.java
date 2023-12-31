@@ -1,4 +1,4 @@
-package com.example.projectshopping.model.entities.product;
+package com.example.projectshopping.model.entities.order;
 
 import com.example.projectshopping.notification.Observer;
 

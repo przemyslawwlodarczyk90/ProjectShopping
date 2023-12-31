@@ -1,7 +1,7 @@
 package com.example.projectshopping.notification;
 
 import com.example.projectshopping.model.entities.order.Order;
-import com.example.projectshopping.model.entities.product.Observable;
+import com.example.projectshopping.model.entities.order.Observable;
 
 public class Email implements Observer {
 

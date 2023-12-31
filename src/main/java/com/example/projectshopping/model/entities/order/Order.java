@@ -1,7 +1,5 @@
 package com.example.projectshopping.model.entities.order;
 
-import com.example.projectshopping.model.entities.product.Observable;
-import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.entities.user.User;
 import com.example.projectshopping.model.enums.OrderStatus;
 
