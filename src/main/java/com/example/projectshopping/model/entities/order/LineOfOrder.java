@@ -12,8 +12,8 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "line_of_orders")
 public class LineOfOrder {
 
@@ -31,4 +31,11 @@ public class LineOfOrder {
 
     private int quantity;
     private BigDecimal unitPrice;
+
+
+    public LineOfOrder(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+        this.unitPrice = product.getPrice();
+    }
 }

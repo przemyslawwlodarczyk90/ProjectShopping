@@ -3,12 +3,15 @@ package com.example.projectshopping.controller;
 import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.repository.ProductRepository;
 
+import com.example.projectshopping.service.BasketService;
 import com.example.projectshopping.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +24,10 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+
+    @Autowired
+    private BasketService basketService;
 
     @GetMapping("/products")
     public String listProducts(Model model) {
@@ -56,4 +63,27 @@ public class ProductController {
 
         return "searchResults"; // To jest nazwa widoku, którego jeszcze nie utworzyliśmy
     }
-}
+
+    @GetMapping("/basket/remove/{productId}")
+    public String removeProductFromBasket(@PathVariable Long productId, RedirectAttributes redirectAttributes) {
+        Product product = productService.findProductById(productId);
+        if (product != null) {
+            basketService.removeProduct(product);
+            redirectAttributes.addFlashAttribute("success", "Produkt usunięty z koszyka.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Produkt nie znaleziony.");
+        }
+        return "redirect:/basket";
+    }
+
+    @GetMapping("/basket/add/{productId}")
+    public String addProductToBasket(@PathVariable Long productId, RedirectAttributes redirectAttributes) {
+        Product product = productService.findProductById(productId);
+        if (product != null) {
+            basketService.addProduct(product);
+            redirectAttributes.addFlashAttribute("success", "Produkt dodany do koszyka.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Produkt nie znaleziony.");
+        }
+
+        return "redirect:/products";}}
