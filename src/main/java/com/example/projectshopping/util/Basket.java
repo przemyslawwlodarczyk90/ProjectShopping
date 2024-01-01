@@ -1,12 +1,7 @@
 package com.example.projectshopping.util;
 
 import com.example.projectshopping.model.entities.order.LineOfOrder;
-import com.example.projectshopping.model.entities.order.Order;
-import com.example.projectshopping.model.entities.order.ShippingAddress;
 import com.example.projectshopping.model.entities.product.Product;
-import com.example.projectshopping.model.entities.user.User;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,19 +10,20 @@ import org.springframework.web.context.annotation.SessionScope;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Component
 @SessionScope
 public class Basket {
 
-    private final List<LineOfOrder> lineOfOrders = new ArrayList<>();
+    private List<LineOfOrder> lineOfOrders;
 
+    // Konstruktor domyślny
+    public Basket() {
+        this.lineOfOrders = new ArrayList<>();
+    }
+
+    // Dodawanie produktu do koszyka
     public void addProduct(Product product, int quantity) {
         LineOfOrder lineOfOrder = findLineByProduct(product);
         if (lineOfOrder == null) {
@@ -37,6 +33,7 @@ public class Basket {
         }
     }
 
+    // Usuwanie produktu z koszyka
     public void removeProduct(Product product) {
         LineOfOrder lineOfOrder = findLineByProduct(product);
         if (lineOfOrder != null) {
@@ -48,6 +45,7 @@ public class Basket {
         }
     }
 
+    // Wyszukiwanie linii zamówienia na podstawie produktu
     private LineOfOrder findLineByProduct(Product product) {
         return lineOfOrders.stream()
                 .filter(line -> line.getProduct().equals(product))
@@ -55,11 +53,12 @@ public class Basket {
                 .orElse(null);
     }
 
+    // Pobieranie listy linii zamówień
     public List<LineOfOrder> getLineOfOrders() {
         return lineOfOrders;
     }
 
-
+    // Czyszczenie koszyka
     public void clear() {
         lineOfOrders.clear();
     }

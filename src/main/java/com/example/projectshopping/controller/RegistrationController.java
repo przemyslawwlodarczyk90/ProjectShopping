@@ -1,8 +1,6 @@
 package com.example.projectshopping.controller;
 
-import com.example.projectshopping.model.form.LoginForm;
 import com.example.projectshopping.model.form.RegistrationForm;
-import com.example.projectshopping.service.LoginService;
 import com.example.projectshopping.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +20,7 @@ public class RegistrationController {
             registrationService.register(form);
             return "redirect:/login";
         } catch (RuntimeException e) {
-            return "register";
+            return "user_register";
         }
     }
 }

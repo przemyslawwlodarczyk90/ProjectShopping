@@ -20,7 +20,10 @@ public class OrderService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<Order> findAllOrder;
+    public List<Order> findAllOrders() {
+        return orderRepository.findAll();
+    }
+
 
     public List<Order> findAllOrdersByCustomerId(Long customerId) {
         return orderRepository.findAllByCustomerId(customerId);

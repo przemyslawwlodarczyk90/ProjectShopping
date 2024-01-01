@@ -16,7 +16,7 @@ public class OrderController {
     @GetMapping
     public String listOrders(Model model) {
         model.addAttribute("orders", orderService.findAllOrders());
-        return "orders_list";
+        return "order_list";
     }
 
     // Metody do wyświetlania szczegółów, edycji, usuwania zamówień...

@@ -16,11 +16,17 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping
+    public String listCategories(Model model) {
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "categories"; // Nazwa szablonu Thymeleaf do wyświetlania kategorii
+    }
+
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("category", new Category());
         model.addAttribute("allCategories", categoryService.getAllCategories());
-        return "add-category"; // Nazwa szablonu Thymeleaf
+        return "category_add"; // Nazwa szablonu Thymeleaf
     }
 
     @PostMapping("/add")
@@ -29,17 +35,11 @@ public class CategoryController {
         return "redirect:/categories"; // Przekierowanie do listy kategorii po dodaniu
     }
 
-    @GetMapping
-    public String listCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories"; // Nazwa szablonu Thymeleaf do wyświetlania kategorii
-    }
-
-    @GetMapping("/categoryTree")
+    @GetMapping("/tree")
     public String showCategoryTree(Model model) {
         List<Category> categories = categoryService.getAllCategories(); // lub getTopLevelCategories()
         model.addAttribute("categories", categories);
-        return "categoryTree"; // nazwa widoku Thymeleaf
+        return "category_tree"; // nazwa widoku Thymeleaf
     }
 
 
