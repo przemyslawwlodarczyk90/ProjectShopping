@@ -23,7 +23,23 @@ public class CategoryService {
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
+
     }
 
+
+
+    public Category getCategoryById(Long id) {
+        return categoryRepository.findById(id).orElse(null);
+    }
+
+    public Category updateCategory(Long id, Category updatedCategory) {
+        Category category = getCategoryById(id);
+        if (category != null) {
+            category.setName(updatedCategory.getName());
+            category.setParentCategory(updatedCategory.getParentCategory());
+            return categoryRepository.save(category);
+        }
+        return null;
+    }
 
 }

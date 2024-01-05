@@ -25,5 +25,9 @@ public class BasketService {
         return products;
     }
 
+    public void clear() {
+        products.clear();
+    }
+
 
 }
