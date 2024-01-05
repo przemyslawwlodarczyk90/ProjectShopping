@@ -15,10 +15,15 @@ package com.example.projectshopping.service;
 @Service
 public class OrderService {
 
-    @Autowired
+
     private OrderRepository orderRepository;
-    @Autowired
+
     private UserRepository userRepository;
+
+    public OrderService(OrderRepository orderRepository, UserRepository userRepository) {
+        this.orderRepository = orderRepository;
+        this.userRepository = userRepository;
+    }
 
     public List<Order> findAllOrders() {
         return orderRepository.findAll();

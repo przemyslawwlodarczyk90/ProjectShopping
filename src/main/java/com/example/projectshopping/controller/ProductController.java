@@ -21,15 +21,20 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
+
     private ProductRepository productRepository;
 
-    @Autowired
+
     private ProductService productService;
 
 
-    @Autowired
     private BasketService basketService;
+
+    public ProductController(ProductRepository productRepository, ProductService productService, BasketService basketService) {
+        this.productRepository = productRepository;
+        this.productService = productService;
+        this.basketService = basketService;
+    }
 
 
     @GetMapping

@@ -23,6 +23,7 @@ public class ProductService {
     public Product findProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
+
     public List<Product> findAllProductsByCategory(Category category) {
         return productRepository.findAllByCategory(category);
     }

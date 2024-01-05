@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
+
     private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);

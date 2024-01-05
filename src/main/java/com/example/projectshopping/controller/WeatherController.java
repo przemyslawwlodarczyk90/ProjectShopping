@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WeatherController {
 
-    @Autowired
+
     private WeatherService weatherService;
+
+    public WeatherController(WeatherService weatherService) {
+        this.weatherService = weatherService;
+    }
 
     @GetMapping("/weather")
     public String getWeather(@RequestParam(name = "city", required = false, defaultValue = "Warsaw") String city, Model model) {

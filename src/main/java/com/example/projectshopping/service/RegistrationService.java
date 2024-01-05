@@ -12,11 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistrationService {
 
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
+
     private PasswordEncoder passwordEncoder;
+
+    public RegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public void register(RegistrationForm form) {
         User user = new User();

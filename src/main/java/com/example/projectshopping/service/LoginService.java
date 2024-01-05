@@ -16,14 +16,20 @@ import org .springframework.stereotype.Service;
 @Service
 public class LoginService {
 
-    @Autowired
+
     private UserRepository userRepository;
 
-    @Autowired
+
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+
     private PasswordEncoder passwordEncoder;
+
+    public LoginService(UserRepository userRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public boolean login(LoginForm form) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(form.getEmail(), form.getPassword()));
