@@ -2,7 +2,7 @@ package com.example.projectshopping.model.entities.user;
 
 import com.example.projectshopping.model.entities.order.Order;
 import com.example.projectshopping.model.enums.AdminOrUser;
-import com.example.projectshopping.util.PasswordManager;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -57,7 +58,7 @@ public class User {
     private Date updatedAt;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    private Set<Order> orders;
 
     public User(String email, String passwordHash, String avatarPath, String firstName, String lastName) {
         this.email = email;
@@ -67,13 +68,13 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User(String email, String passwordHash, String avatarPath, String firstName, String lastName, PasswordManager passwordManager) {
-        this.email = email;
-        this.passwordHash = passwordManager.encode(passwordHash);
-        this.avatarPath = avatarPath;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+//    public User(String email, String passwordHash, String avatarPath, String firstName, String lastName, PasswordManager passwordManager) {
+//        this.email = email;
+//        this.passwordHash = passwordManager.encode(passwordHash);
+//        this.avatarPath = avatarPath;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//    }
 
     public User addOrder(Order order) {
         this.orders.add(order);
