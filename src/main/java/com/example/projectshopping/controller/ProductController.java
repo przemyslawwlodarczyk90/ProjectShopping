@@ -1,21 +1,20 @@
 package com.example.projectshopping.controller;
 
+import com.example.projectshopping.model.dto.ProductDTO;
+import com.example.projectshopping.mapper.ProductMapper;
 import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.repository.ProductRepository;
 
 import com.example.projectshopping.service.BasketService;
 import com.example.projectshopping.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/products")
@@ -40,15 +39,23 @@ public class ProductController {
     @GetMapping
     public String listProducts(@RequestParam(name = "viewType", defaultValue = "grid") String viewType, Model model) {
         List<Product> products = productService.findAllProducts();
-        model.addAttribute("products", products);
+        List<ProductDTO> productDTOs = products.stream()
+                .map(ProductMapper::toDTO)
+                .collect(Collectors.toList());
+        model.addAttribute("products", productDTOs);
         return viewType.equals("list") ? "products_list" : "products_grid";
     }
 
     @GetMapping("/add")
     public String showAddProductForm(Model model) {
-        model.addAttribute("product", new Product());
-        // Dodaj tu inne potrzebne atrybuty, np. listy dla dropdownów
+        model.addAttribute("productDTO", new ProductDTO());
         return "product_add";
+    }
+
+    @PostMapping("/add")
+    public String addProduct(@ModelAttribute ProductDTO productDTO) {
+        productService.saveProduct(ProductMapper.toEntity(productDTO));
+        return "redirect:/products";
     }
 
     @GetMapping("/search")

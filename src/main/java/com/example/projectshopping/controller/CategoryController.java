@@ -1,5 +1,7 @@
 package com.example.projectshopping.controller;
 
+import com.example.projectshopping.mapper.CategoryMapper;
+import com.example.projectshopping.model.dto.CategoryDTO;
 import com.example.projectshopping.model.entities.product.Category;
 import com.example.projectshopping.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/categories")
@@ -21,15 +24,17 @@ public class CategoryController {
 
     @GetMapping
     public String listCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories"; // Nazwa szablonu Thymeleaf do wyświetlania kategorii
+        List<CategoryDTO> categories = categoryService.getAllCategories().stream()
+                .map(CategoryMapper::toDTO)
+                .collect(Collectors.toList());
+        model.addAttribute("categories", categories);
+        return "categories";
     }
 
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("category", new Category());
-        model.addAttribute("allCategories", categoryService.getAllCategories());
-        return "category_add"; // Nazwa szablonu Thymeleaf
+        model.addAttribute("categoryDTO", new CategoryDTO());
+        return "category_add";
     }
 
     @PostMapping("/add")
@@ -47,14 +52,14 @@ public class CategoryController {
 
     @GetMapping("/edit/{id}")
     public String editCategoryForm(@PathVariable Long id, Model model) {
-        Category category = categoryService.getCategoryById(id);
-        model.addAttribute("category", category);
+        CategoryDTO categoryDTO = CategoryMapper.toDTO(categoryService.getCategoryById(id));
+        model.addAttribute("categoryDTO", categoryDTO);
         return "category_edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String editCategory(@PathVariable Long id, @ModelAttribute Category category) {
-        categoryService.updateCategory(id, category);
+    public String editCategory(@PathVariable Long id, @ModelAttribute CategoryDTO categoryDTO) {
+        categoryService.updateCategory(id, CategoryMapper.toEntity(categoryDTO));
         return "redirect:/categories";
     }
 

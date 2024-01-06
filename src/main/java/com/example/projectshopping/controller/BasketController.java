@@ -1,5 +1,7 @@
 package com.example.projectshopping.controller;
 
+import com.example.projectshopping.mapper.OrderMapper;
+import com.example.projectshopping.model.dto.OrderDTO;
 import com.example.projectshopping.model.entities.order.Order;
 import com.example.projectshopping.service.BasketService;
 import com.example.projectshopping.service.OrderService;
@@ -27,17 +29,15 @@ public class BasketController {
 
     @GetMapping("/checkout")
     public String checkoutForm(Model model) {
-        // Przygotowanie pustego obiektu Order do formularza
-        model.addAttribute("order", new Order());
+        model.addAttribute("order", new OrderDTO()); // Używamy DTO zamiast encji
         return "order_checkout_form";
     }
 
     @PostMapping("/checkout")
-    public String processCheckout(@ModelAttribute Order order) {
-        // Procesowanie zamówienia na podstawie danych z koszyka
-        // Dodanie produktów z koszyka do zamówienia, obliczenie ceny, zapisanie zamówienia
-        orderService.saveOrder(order); // zapisanie zamówienia w bazie danych
-        basketService.clear(); // czyszczenie koszyka po finalizacji zamówienia
-        return "redirect:/orders/success"; // przekierowanie na stronę potwierdzenia zamówienia
+    public String processCheckout(@ModelAttribute OrderDTO orderDTO) {
+        Order order = OrderMapper.toEntity(orderDTO);
+        orderService.saveOrder(order); // Może być konieczna dodatkowa logika do obsługi LineOfOrderDTO
+        basketService.clear();
+        return "redirect:/orders/success";
     }
 }
