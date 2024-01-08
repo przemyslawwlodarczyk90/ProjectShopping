@@ -53,6 +53,15 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @GetMapping("/user/{userId}")
+    public String listOrdersByUser(@PathVariable Long userId, Model model) {
+        List<Order> orders = orderService.findAllOrdersByUserId(userId);
+        List<OrderDTO> orderDTOs = orders.stream()
+                .map(OrderMapper::toDTO)
+                .collect(Collectors.toList());
+        model.addAttribute("orders", orderDTOs);
+        return "order_list_by_user";
+    }
 
 }
 

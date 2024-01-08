@@ -21,7 +21,7 @@ public class BasketController {
     private final BasketService basketService;
     private final OrderService orderService;
 
-    @Autowired
+
     public BasketController(BasketService basketService, OrderService orderService) {
         this.basketService = basketService;
         this.orderService = orderService;

@@ -30,8 +30,8 @@ public class OrderService {
     }
 
 
-    public List<Order> findAllOrdersByCustomerId(Long customerId) {
-        return orderRepository.findAllByCustomerId(customerId);
+    public List<Order> findAllOrdersByUserId(Long userId) {
+        return orderRepository.findAllOrdersByUserId(userId);
     }
 
 
