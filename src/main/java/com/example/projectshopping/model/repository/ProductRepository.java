@@ -3,13 +3,13 @@ package com.example.projectshopping.model.repository;
 
 import com.example.projectshopping.model.entities.product.Category;
 import com.example.projectshopping.model.entities.product.Product;
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository {
     List<Product> findAll();
 
     List<Product> findAllByCategory(Category category);
@@ -22,7 +22,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     List<Product> findAllByAuthor(String author);
 
-    Product findById(long id);
+    Optional<Product> findById(long id);
 
     Product save(Product product);;
 

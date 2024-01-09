@@ -2,17 +2,14 @@ package com.example.projectshopping.model.repository;
 
 import com.example.projectshopping.model.entities.order.Order;
 import com.example.projectshopping.model.enums.OrderStatus;
-import org.springframework.data.jpa.repository.*;
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Repository
-public interface OrderRepository extends JpaRepository<Order, Long>,
-        CrudRepository<Order, Long> {
+public interface OrderRepository {
 
 
     // Filter orders by customer ID
@@ -25,7 +22,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>,
     List<Order> findAllByDateCreatedBetween(LocalDate fromDate, LocalDate toDate);
 
     // Retrieves an order by its ID
-    Order findById(long id);
+    Optional<Order> findById(long id);
 
     // Saves an order to the database
     Order save(Order order);
@@ -41,6 +38,8 @@ public interface OrderRepository extends JpaRepository<Order, Long>,
 
     // Filters orders by total amount between specified values
     List<Order> findAllByTotalPriceBetween(BigDecimal fromPrice, BigDecimal toPrice);
+
+    List<Order> findAll();
 
     // Filters orders by total amount greater than a specified value and sorts them by date created in descending order
 

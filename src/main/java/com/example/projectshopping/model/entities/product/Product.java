@@ -2,7 +2,6 @@ package com.example.projectshopping.model.entities.product;
 
 
 import com.example.projectshopping.model.enums.ProductType;
-import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,22 +11,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 
-@Entity
-@Data
-@AllArgsConstructor
-@Table(name = "products")
 public class Product {
 
- @Id
- @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long id;
 
- @ManyToOne
- @JoinColumn(name = "author_id")
  private AuthorEmbeddable author;
 
- @ManyToOne
- @JoinColumn(name = "category_id")
  private CategoryEmbeddable category;
 
  private String title;
@@ -53,6 +42,78 @@ public class Product {
   this.category = category;
   this.price = price;
   this.productType = productType;
+  this.quantity = quantity;
+ }
+
+ public BigDecimal getPrice() {
+  return price;
+ }
+
+ public Long getId() {
+  return id;
+ }
+
+ public void setId(Long id) {
+  this.id = id;
+ }
+
+ public AuthorEmbeddable getAuthor() {
+  return author;
+ }
+
+ public void setAuthor(AuthorEmbeddable author) {
+  this.author = author;
+ }
+
+ public CategoryEmbeddable getCategory() {
+  return category;
+ }
+
+ public void setCategory(CategoryEmbeddable category) {
+  this.category = category;
+ }
+
+ public String getTitle() {
+  return title;
+ }
+
+ public void setTitle(String title) {
+  this.title = title;
+ }
+
+ public String getDescription() {
+  return description;
+ }
+
+ public void setDescription(String description) {
+  this.description = description;
+ }
+
+ public String getMiniature() {
+  return miniature;
+ }
+
+ public void setMiniature(String miniature) {
+  this.miniature = miniature;
+ }
+
+ public void setPrice(BigDecimal price) {
+  this.price = price;
+ }
+
+ public ProductType getProductType() {
+  return productType;
+ }
+
+ public void setProductType(ProductType productType) {
+  this.productType = productType;
+ }
+
+ public int getQuantity() {
+  return quantity;
+ }
+
+ public void setQuantity(int quantity) {
   this.quantity = quantity;
  }
 }

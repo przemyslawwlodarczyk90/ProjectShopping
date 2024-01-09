@@ -5,7 +5,6 @@ import com.example.projectshopping.model.enums.OrderStatus;
 
 
 import com.example.projectshopping.notification.Observer;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,34 +14,24 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "orders")
 public class Order implements Observable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
-    @Enumerated(EnumType.ORDINAL)
+
     private OrderStatus orderStatus;
 
-    @Column(name = "date_created")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
+
     private LocalDate dateCreated;
 
-    @Column(name = "sent_at")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private LocalDate sentAt;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+
     private List<LineOfOrder> lineOfOrders;
 
     private BigDecimal totalPrice;
@@ -75,5 +64,42 @@ public class Order implements Observable {
     public void changeOrderStatus(OrderStatus orderStatus) {
         setOrderStatus(orderStatus);
         notifyObservers();
+    }
+
+    private void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public LocalDate getSentAt() {
+        return sentAt;
+    }
+
+    public List<LineOfOrder> getLineOfOrders() {
+        return lineOfOrders;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
     }
 }

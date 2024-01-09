@@ -1,15 +1,14 @@
 package com.example.projectshopping.model.repository;
 
 import com.example.projectshopping.model.entities.user.User;
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository {
 
     User findByEmail(String email);
 
@@ -21,4 +20,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     void delete(User user);
 
+    List<User> findAll();
+
+    Optional<User> findById(Long id);
+
+    void deleteById(Long id);
 }

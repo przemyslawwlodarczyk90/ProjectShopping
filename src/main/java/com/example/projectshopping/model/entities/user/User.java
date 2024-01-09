@@ -3,8 +3,6 @@ package com.example.projectshopping.model.entities.user;
 import com.example.projectshopping.model.entities.order.Order;
 import com.example.projectshopping.model.enums.AdminOrUser;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,50 +12,30 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Email
-    @Column(unique = true)
     private String email;
 
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "password_hash")
     private String passwordHash;
 
-    @Embedded
     private UserAddress address;
 
-    @Column(name = "phone_number")
     private int phoneNumber;
 
-    @Column(name = "avatar_path")
     private String avatarPath;
 
-    @Enumerated(EnumType.STRING)
     private AdminOrUser adminOrUser;
 
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "user")
     private Set<Order> orders;
 
     public User(String email, String passwordHash, String avatarPath, String firstName, String lastName) {
@@ -68,13 +46,8 @@ public class User {
         this.lastName = lastName;
     }
 
-//    public User(String email, String passwordHash, String avatarPath, String firstName, String lastName, PasswordManager passwordManager) {
-//        this.email = email;
-//        this.passwordHash = passwordManager.encode(passwordHash);
-//        this.avatarPath = avatarPath;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//    }
+    public User() {
+    }
 
     public User addOrder(Order order) {
         this.orders.add(order);
@@ -83,5 +56,97 @@ public class User {
 
     public void setAddress(UserAddress address) {
         this.address = address;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public UserAddress getAddress() {
+        return address;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public AdminOrUser getAdminOrUser() {
+        return adminOrUser;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public void setAdminOrUser(AdminOrUser adminOrUser) {
+        this.adminOrUser = adminOrUser;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }
