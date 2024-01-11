@@ -14,7 +14,7 @@ public interface UserRepository {
 
     User findByUsernameIgnoreCaseContaining(String username);
 
-    List<User> findAllByLastLoginDateBetween(LocalDate fromDate, LocalDate toDate);
+
 
     User save(User user);
 

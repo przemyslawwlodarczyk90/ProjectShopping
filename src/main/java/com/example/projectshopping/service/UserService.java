@@ -26,9 +26,7 @@ public class UserService {
         return userRepository.findByUsernameIgnoreCaseContaining(username);
     }
 
-    public List<User> findAllUsersByLastLoginDateBetween(LocalDate fromDate, LocalDate toDate) {
-        return userRepository.findAllByLastLoginDateBetween(fromDate, toDate);
-    }
+
 
     public User saveUser(User user) {
         // Save the user to the database

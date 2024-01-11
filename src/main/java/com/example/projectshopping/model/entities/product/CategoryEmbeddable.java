@@ -7,6 +7,14 @@ public class CategoryEmbeddable {
     private Category category;
     private Long id;
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
