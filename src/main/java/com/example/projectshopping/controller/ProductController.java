@@ -38,11 +38,8 @@ public class ProductController {
 
     @GetMapping
     public String listProducts(@RequestParam(name = "viewType", defaultValue = "grid") String viewType, Model model) {
-        List<Product> products = productService.findAllProducts();
-        List<ProductDTO> productDTOs = products.stream()
-                .map(ProductMapper::toDTO)
-                .collect(Collectors.toList());
-        model.addAttribute("products", productDTOs);
+        List<ProductDTO> products = productService.findAllProducts();
+        model.addAttribute("products", products);
         return viewType.equals("list") ? "products_list" : "products_grid";
     }
 

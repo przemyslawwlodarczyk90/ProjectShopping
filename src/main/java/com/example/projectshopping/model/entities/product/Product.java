@@ -3,6 +3,7 @@ package com.example.projectshopping.model.entities.product;
 
 import com.example.projectshopping.model.enums.ProductType;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +11,15 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Date;
 
-
+@Entity
 public class Product {
 
+ @Id
+ @GeneratedValue(strategy= GenerationType.AUTO)
  private Long id;
 
- private AuthorEmbeddable author;
+ @ManyToOne
+ private Author author;
 
  private CategoryEmbeddable category;
 

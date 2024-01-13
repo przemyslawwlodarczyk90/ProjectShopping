@@ -1,23 +1,39 @@
 package com.example.projectshopping.service;
 
+import com.example.projectshopping.model.dto.ProductDTO;
 import com.example.projectshopping.model.entities.product.Category;
 import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.repository.ProductRepository;
+import com.example.projectshopping.util.ObjectMapperUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    private  ProductRepository productRepository;
+    private ObjectMapperUtils mapper;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, ObjectMapperUtils mapper) {
         this.productRepository = productRepository;
+        this.mapper = mapper;
     }
 
-    public List<Product> findAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> findAllProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(product -> ProductDTO.builder()
+                        .productType(product.getProductType())
+                        .description()
+                        .price()
+                        .authorDto()
+
+                        .build())
+                .collect(Collectors.toList());
+//        return mapper.mapAll(productRepository.findAll(), ProductDTO.class);
     }
 
     public Product findProductById(Long id) {

@@ -4,13 +4,15 @@ package com.example.projectshopping.model.repository;
 import com.example.projectshopping.model.entities.product.Category;
 import com.example.projectshopping.model.entities.product.Product;
 import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ProductRepository {
-    List<Product> findAll();
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
 
     List<Product> findAllByCategory(Category category);
 
