@@ -42,4 +42,9 @@ class InMemoryProductRepository implements ProductRepository {
   public void delete(Product product) {
     products.remove(product.getId());
   }
+
+  @Override
+  public void deleteById(long id) {
+    products.remove(id);
+  }
 }

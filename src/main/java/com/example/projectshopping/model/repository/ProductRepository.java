@@ -18,4 +18,6 @@ public interface ProductRepository {
     Product save(Product product);;
 
     void delete(Product product);
+
+    void deleteById(long id); // Dodana metoda
 }

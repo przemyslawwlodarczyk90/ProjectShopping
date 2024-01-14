@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Builder
+@Data
 public record ProductDTO(
         Long id,
         Long authorId,
