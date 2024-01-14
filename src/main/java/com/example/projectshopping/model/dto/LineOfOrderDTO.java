@@ -1,16 +1,23 @@
 package com.example.projectshopping.model.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-@Data
-public class LineOfOrderDTO {
+@Builder
+public record LineOfOrderDTO(
+        Long id,
+        Long productId,
+        int quantity,
+        BigDecimal unitPrice
+) {
 
-    private Long id;
-    private Long productId;
-    private int quantity;
-    private BigDecimal unitPrice;
-
-    // Gettery, Settery, Konstruktory
+    public LineOfOrderDTO {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(productId);
+        Objects.requireNonNull(quantity);
+        Objects.requireNonNull(unitPrice);
+    }
 }

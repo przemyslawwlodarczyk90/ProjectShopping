@@ -19,7 +19,7 @@ public interface OrderRepository {
     List<Order> findAllByOrderStatus(OrderStatus orderStatus);
 
     // Filter orders by date created between specified dates
-    List<Order> findAllByDateCreatedBetween(LocalDate fromDate, LocalDate toDate);
+
 
     // Retrieves an order by its ID
     Optional<Order> findById(long id);
@@ -31,13 +31,7 @@ public interface OrderRepository {
     void delete(Order order);
 
     // Filters orders by total amount greater than a specified value
-    List<Order> findAllByTotalPriceGreaterThan(BigDecimal totalPrice);
 
-    // Filters orders by total amount less than a specified value
-    List<Order> findAllByTotalPriceLessThan(BigDecimal totalPrice);
-
-    // Filters orders by total amount between specified values
-    List<Order> findAllByTotalPriceBetween(BigDecimal fromPrice, BigDecimal toPrice);
 
     List<Order> findAll();
 

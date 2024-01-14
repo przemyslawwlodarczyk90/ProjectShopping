@@ -3,6 +3,7 @@ package com.example.projectshopping.service;
 
 import com.example.projectshopping.model.entities.order.Order;
 
+import com.example.projectshopping.model.enums.OrderStatus;
 import com.example.projectshopping.model.repository.OrderRepository;
 import com.example.projectshopping.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,9 @@ public class OrderService {
   }
 
 
-  public List<Order> findAllOrdersByDateCreatedBetween(LocalDate fromDate, LocalDate toDate) {
-    return orderRepository.findAllByDateCreatedBetween(fromDate, toDate);
+
+  public List<Order> findAllOrdersByStatus(OrderStatus status) {
+    return orderRepository.findAllByOrderStatus(status);
   }
 
   public Order findOrderById(Long id) {

@@ -1,19 +1,17 @@
 package com.example.projectshopping.model.dto;
 
-import lombok.Data;
+import lombok.Builder;
+import java.util.Objects;
 
-@Data
-public class UserDTO {
-    private Long id;
-    private String email;
-    private String firstName;
-    private String lastName;
 
-    public UserDTO(Long id, String email, String firstName, String lastName) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+@Builder
+public record UserDTO(Long id, String email, String firstName, String lastName) {
+
+    public UserDTO {
+        Objects.requireNonNull(id);
+        Objects.requireNonNull(email);
+        Objects.requireNonNull(firstName);
+        Objects.requireNonNull(lastName);
     }
 
 }

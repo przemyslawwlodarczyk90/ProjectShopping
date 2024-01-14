@@ -29,12 +29,11 @@ public class Product {
 
  private ProductType productType;
 
- private int quantity;
 
  public Product() {
  }
 
- public Product(String title, String description, String miniature, AuthorEmbeddable author, CategoryEmbeddable category, BigDecimal price, ProductType productType, int quantity) {
+ public Product(String title, String description, String miniature, AuthorEmbeddable author, CategoryEmbeddable category, BigDecimal price, ProductType productType) {
   this.title = title;
   this.description = description;
   this.miniature = miniature;
@@ -42,7 +41,6 @@ public class Product {
   this.category = category;
   this.price = price;
   this.productType = productType;
-  this.quantity = quantity;
  }
 
  public BigDecimal getPrice() {
@@ -109,11 +107,5 @@ public class Product {
   this.productType = productType;
  }
 
- public int getQuantity() {
-  return quantity;
- }
 
- public void setQuantity(int quantity) {
-  this.quantity = quantity;
- }
 }

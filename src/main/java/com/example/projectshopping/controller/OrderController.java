@@ -62,6 +62,16 @@ public class OrderController {
         model.addAttribute("orders", orderDTOs);
         return "order_list_by_user";
     }
+    @GetMapping("/status/{status}")
+    public String listOrdersByStatus(@PathVariable OrderStatus status, Model model) {
+        List<Order> orders = orderService.findAllOrdersByStatus(status);
+        List<OrderDTO> orderDTOs = orders.stream()
+                .map(OrderMapper::toDTO)
+                .collect(Collectors.toList());
+        model.addAttribute("orders", orderDTOs);
+        return "order_list_status"; // Nazwa szablonu Thymeleaf
+    }
+
 
 }
 

@@ -58,20 +58,8 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/search")
-    public String searchProducts(
-            @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "category", required = false) Long categoryId,
-            @RequestParam(name = "minPrice", required = false) BigDecimal minPrice,
-            @RequestParam(name = "maxPrice", required = false) BigDecimal maxPrice,
-            @RequestParam(name = "author", required = false) String author,
-            Model model
-    ) {
-        // Tutaj wywołujesz odpowiednie metody z serwisu w zależności od parametrów
-        // Następnie przekazujesz wyniki wyszukiwania do widoku Thymeleaf
 
-        return "product_search_results"; // To jest nazwa widoku, którego jeszcze nie utworzyliśmy
-    }
+
 
     @GetMapping("/basket/add/{productId}")
     public String addProductToBasket(@PathVariable Long productId, RedirectAttributes redirectAttributes) {

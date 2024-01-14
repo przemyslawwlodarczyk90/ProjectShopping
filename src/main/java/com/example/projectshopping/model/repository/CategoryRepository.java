@@ -8,10 +8,6 @@ import java.util.Optional;
 public interface CategoryRepository {
 
 
-    List<Category> findByNameContainingIgnoreCase(String name);
-
-
-    List<Category> findByParentCategory(Category parentCategory);
 
 
     Category save(Category category);

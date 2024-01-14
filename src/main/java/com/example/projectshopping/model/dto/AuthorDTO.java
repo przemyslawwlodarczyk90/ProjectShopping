@@ -1,19 +1,16 @@
 package com.example.projectshopping.model.dto;
 
 import lombok.Builder;
-import lombok.Data;
 
 import java.util.Objects;
 
-
 @Builder
-public record CategoryDTO(
+public record AuthorDTO(
         Long id,
-        String name,
-        Long parentCategoryId
+        String name
 ) {
 
-    public CategoryDTO {
+    public AuthorDTO {
         Objects.requireNonNull(id);
         Objects.requireNonNull(name);
     }

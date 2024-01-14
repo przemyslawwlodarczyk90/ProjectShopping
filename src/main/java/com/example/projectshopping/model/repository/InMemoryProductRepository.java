@@ -20,53 +20,7 @@ class InMemoryProductRepository implements ProductRepository {
     return new ArrayList<>(products.values());
   }
 
-  @Override
-  public List<Product> findAllByCategory(Category category) {
-    return products.values().stream()
-            .filter(product -> product.getCategory().getCategory().equals(category))
-            .collect(Collectors.toList());
-  }
 
-  @Override
-  public List<Product> findAllByPrice(int minPrice, int maxPrice) {
-    BigDecimal min = BigDecimal.valueOf(minPrice);
-    BigDecimal max = BigDecimal.valueOf(maxPrice);
-    return products.values().stream()
-            .filter(product -> product.getPrice().compareTo(min) >= 0 &&
-                    product.getPrice().compareTo(max) <= 0)
-            .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<Product> findAllByPriceOrderByPrice(int minPrice, int maxPrice, boolean ascending) {
-    BigDecimal min = BigDecimal.valueOf(minPrice);
-    BigDecimal max = BigDecimal.valueOf(maxPrice);
-    Stream<Product> filteredProducts = products.values().stream()
-            .filter(product -> product.getPrice().compareTo(min) >= 0 &&
-                    product.getPrice().compareTo(max) <= 0);
-
-    if (ascending) {
-      return filteredProducts.sorted(Comparator.comparing(Product::getPrice))
-              .collect(Collectors.toList());
-    } else {
-      return filteredProducts.sorted(Comparator.comparing(Product::getPrice).reversed())
-              .collect(Collectors.toList());
-    }
-  }
-
-  @Override
-  public List<Product> findAllByTitleContainingIgnoreCase(String title) {
-    return products.values().stream()
-            .filter(product -> product.getTitle().toLowerCase().contains(title.toLowerCase()))
-            .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<Product> findAllByAuthor(String author) {
-    return products.values().stream()
-            .filter(product -> product.getAuthor().getAuthor().getName().equalsIgnoreCase(author))
-            .collect(Collectors.toList());
-  }
 
   // Inne metody, takie jak findAllByPrice, findAllByTitleContainingIgnoreCase itd.
 

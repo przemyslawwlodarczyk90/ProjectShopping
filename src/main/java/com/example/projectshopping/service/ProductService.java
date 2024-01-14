@@ -5,7 +5,9 @@ import com.example.projectshopping.model.entities.product.Product;
 import com.example.projectshopping.model.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -20,32 +22,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+
+
     public Product findProductById(Long id) {
         return productRepository.findById(id).orElse(null);
-    }
-
-    public List<Product> findAllProductsByCategory(Category category) {
-        return productRepository.findAllByCategory(category);
-    }
-
-    public List<Product> findAllProductsByPrice(int minPrice, int maxPrice) {
-        return productRepository.findAllByPrice(minPrice, maxPrice);
-    }
-
-    public List<Product> findAllProductsByPriceOrderByPrice(int minPrice, int maxPrice, boolean ascending) {
-        return productRepository.findAllByPriceOrderByPrice(minPrice, maxPrice, ascending);
-    }
-
-    public List<Product> findAllProductsByTitleContainingIgnoreCase(String title) {
-        return productRepository.findAllByTitleContainingIgnoreCase(title);
-    }
-
-    public List<Product> findAllProductsByAuthor(String author) {
-        return productRepository.findAllByAuthor(author);
-    }
-
-    public Product findProductById(long id) {
-        return productRepository.findById(id).get();
     }
 
     public Product saveProduct(Product product) {

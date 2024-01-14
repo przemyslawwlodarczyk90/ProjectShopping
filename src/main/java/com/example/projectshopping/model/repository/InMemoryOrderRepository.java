@@ -28,12 +28,7 @@ class InMemoryOrderRepository implements OrderRepository {
             .collect(Collectors.toList());
   }
 
-  @Override
-  public List<Order> findAllByDateCreatedBetween(LocalDate fromDate, LocalDate toDate) {
-    return orders.values().stream()
-            .filter(order -> !order.getDateCreated().isBefore(fromDate) && !order.getDateCreated().isAfter(toDate))
-            .collect(Collectors.toList());
-  }
+
 
   @Override
   public Optional<Order> findById(long id) {
@@ -54,26 +49,7 @@ class InMemoryOrderRepository implements OrderRepository {
     orders.remove(order.getId());
   }
 
-  @Override
-  public List<Order> findAllByTotalPriceGreaterThan(BigDecimal totalPrice) {
-    return orders.values().stream()
-            .filter(order -> order.getTotalPrice() != null && order.getTotalPrice().compareTo(totalPrice) > 0)
-            .collect(Collectors.toList());
-  }
 
-  @Override
-  public List<Order> findAllByTotalPriceLessThan(BigDecimal totalPrice) {
-    return orders.values().stream()
-            .filter(order -> order.getTotalPrice() != null && order.getTotalPrice().compareTo(totalPrice) < 0)
-            .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<Order> findAllByTotalPriceBetween(BigDecimal fromPrice, BigDecimal toPrice) {
-    return orders.values().stream()
-            .filter(order -> order.getTotalPrice() != null && order.getTotalPrice().compareTo(fromPrice) >= 0 && order.getTotalPrice().compareTo(toPrice) <= 0)
-            .collect(Collectors.toList());
-  }
 
   @Override
   public List<Order> findAll() {
