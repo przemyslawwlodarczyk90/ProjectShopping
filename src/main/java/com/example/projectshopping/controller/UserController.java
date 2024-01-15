@@ -1,47 +1,51 @@
 package com.example.projectshopping.controller;
 
-import com.example.projectshopping.mapper.UserMapper;
 import com.example.projectshopping.model.dto.UserDTO;
-import com.example.projectshopping.model.entities.user.User;
 import com.example.projectshopping.service.UserService;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
+    @Autowired
     private UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping
     public String listUsers(Model model) {
-        List<User> users = userService.findAllUsers();
-        List<UserDTO> userDTOs = users.stream()
-                .map(UserMapper::toDTO)
-                .collect(Collectors.toList());
-        model.addAttribute("users", userDTOs);
+        List<UserDTO> users = userService.findAllUsers();
+        model.addAttribute("users", users);
         return "users/list";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        UserDTO userDTO = UserMapper.toDTO(userService.findUserById(id));
-        model.addAttribute("userDTO", userDTO);
-        return "users/edit";
+        Optional<UserDTO> userDTO = userService.findUserById(id);
+        userDTO.ifPresent(dto -> model.addAttribute("userDTO", dto));
+        return userDTO.isPresent() ? "users/edit" : "redirect:/users";
     }
 
     @PostMapping("/edit/{id}")
-    public String editUser(@PathVariable Long id, @ModelAttribute UserDTO userDTO) {
-        userService.saveUser(UserMapper.toEntity(userDTO));
+    public String updateUser(@PathVariable Long id, @ModelAttribute UserDTO userDTO) {
+        userService.updateUser(id, userDTO);
+        return "redirect:/users";
+    }
+
+    @GetMapping("/new")
+    public String showNewUserForm(Model model) {
+        model.addAttribute("userDTO", new UserDTO(null, "", "", ""));
+        return "users/new";
+    }
+
+    @PostMapping("/new")
+    public String createUser(@ModelAttribute UserDTO userDTO) {
+        userService.saveUser(userDTO);
         return "redirect:/users";
     }
 
@@ -49,5 +53,19 @@ public class UserController {
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
         return "redirect:/users";
+    }
+
+    @GetMapping("/search/email")
+    public String findUserByEmail(@RequestParam String email, Model model) {
+        Optional<UserDTO> userDTO = userService.findUserByEmail(email);
+        userDTO.ifPresent(dto -> model.addAttribute("user", dto));
+        return userDTO.isPresent() ? "users/details" : "redirect:/users";
+    }
+
+    @GetMapping("/search/username")
+    public String findUserByUsername(@RequestParam String username, Model model) {
+        Optional<UserDTO> userDTO = userService.findUserByUsername(username);
+        userDTO.ifPresent(dto -> model.addAttribute("user", dto));
+        return userDTO.isPresent() ? "users/details" : "redirect:/users";
     }
 }

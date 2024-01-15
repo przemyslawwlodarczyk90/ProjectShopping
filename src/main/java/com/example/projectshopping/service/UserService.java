@@ -1,56 +1,83 @@
 package com.example.projectshopping.service;
 
+import com.example.projectshopping.model.dto.UserDTO;
 import com.example.projectshopping.model.entities.user.User;
 import com.example.projectshopping.model.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
-
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public List<UserDTO> findAllUsers() {
+        return userRepository.findAll().stream()
+                .map(this::convertToUserDTO)
+                .collect(Collectors.toList());
     }
 
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsernameIgnoreCaseContaining(username);
+    public Optional<UserDTO> findUserById(Long id) {
+        return userRepository.findById(id)
+                .map(this::convertToUserDTO);
     }
 
-
-
-    public User saveUser(User user) {
-        // Save the user to the database
-        userRepository.save(user);
-
-        // Return the saved user
-        return user;
+    public Optional<UserDTO> findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user != null ? Optional.of(convertToUserDTO(user)) : Optional.empty();
     }
 
-    public void deleteUser(User user) {
-        userRepository.delete(user);
+    public Optional<UserDTO> findUserByUsername(String username) {
+        User user = userRepository.findByUsernameIgnoreCaseContaining(username);
+        return user != null ? Optional.of(convertToUserDTO(user)) : Optional.empty();
     }
 
-    public List<User> findAllUsers() {
-        return (List<User>) userRepository.findAll();
+    public UserDTO saveUser(UserDTO userDTO) {
+        User user = convertToUser(userDTO);
+        return convertToUserDTO(userRepository.save(user));
     }
 
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        updateUser(existingUser, userDTO);
+        return convertToUserDTO(userRepository.save(existingUser));
     }
 
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
 
+    private UserDTO convertToUserDTO(User user) {
+        return UserDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .build();
+    }
 
+    private User convertToUser(UserDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.id());
+        user.setEmail(userDTO.email());
+        user.setFirstName(userDTO.firstName());
+        user.setLastName(userDTO.lastName());
+        // Ustaw inne wymagane pola
+        return user;
+    }
+
+    private void updateUser(User user, UserDTO userDTO) {
+        user.setEmail(userDTO.email());
+        user.setFirstName(userDTO.firstName());
+        user.setLastName(userDTO.lastName());
+        // Aktualizuj inne pola
+    }
 }
