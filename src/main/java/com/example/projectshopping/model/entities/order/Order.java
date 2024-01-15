@@ -66,7 +66,7 @@ public class Order implements Observable {
         notifyObservers();
     }
 
-    private void setOrderStatus(OrderStatus orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -102,4 +102,6 @@ public class Order implements Observable {
     public BigDecimal getTotalPrice() {
         return totalPrice;
     }
+
+
 }
