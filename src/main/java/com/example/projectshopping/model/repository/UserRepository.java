@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface UserRepository {
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    User findByUsernameIgnoreCaseContaining(String username);
+    Optional<User> findByUsernameIgnoreCaseContaining(String username);
 
 
 

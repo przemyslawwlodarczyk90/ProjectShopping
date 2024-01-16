@@ -34,12 +34,14 @@ public class CategoryService {
                 .orElse(null);
     }
 
+
     public CategoryDTO updateCategoryDTO(Long id, CategoryDTO updatedCategoryDTO) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         updateCategoryData(category, updatedCategoryDTO);
         return convertToCategoryDTO(categoryRepository.save(category));
     }
+
 
     private CategoryDTO convertToCategoryDTO(Category category) {
         return CategoryDTO.builder()

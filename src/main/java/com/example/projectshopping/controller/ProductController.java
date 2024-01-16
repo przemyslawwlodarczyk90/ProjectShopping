@@ -49,6 +49,12 @@ public class ProductController {
         } else {
             redirectAttributes.addFlashAttribute("error", "Produkt nie znaleziony.");
         }
+        return "redirect:/products_list";
+    }
+    @DeleteMapping("/basket/remove/{productId}")
+    public String removeProductFromBasket(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        productService.deleteProduct(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Produkt został usunięty.");
         return "redirect:/products";
     }
 

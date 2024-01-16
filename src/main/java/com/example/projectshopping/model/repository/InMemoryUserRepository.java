@@ -15,21 +15,17 @@ class InMemoryUserRepository implements UserRepository {
   private Long currentId = 1L;
 
 
-  @Override
-  public User findByEmail(String email) {
+  public Optional<User> findByEmail(String email) {
     return users.values().stream()
             .filter(user -> user.getEmail().equalsIgnoreCase(email))
-            .findFirst()
-            .orElse(null);
+            .findFirst();
   }
 
-
   @Override
-  public User findByUsernameIgnoreCaseContaining(String username) {
+  public Optional<User> findByUsernameIgnoreCaseContaining(String username) {
     return users.values().stream()
             .filter(user -> (user.getFirstName() + " " + user.getLastName()).toLowerCase().contains(username.toLowerCase()))
-            .findFirst()
-            .orElse(null);
+            .findFirst();
   }
 
 

@@ -46,6 +46,12 @@ public class OrderService {
     return convertToOrderDTO(orderRepository.save(order));
   }
 
+  public List<OrderDTO> findAllOrdersByUserId(long userId) {
+    return orderRepository.findAllOrdersByUserId(userId).stream()
+            .map(this::convertToOrderDTO)
+            .collect(Collectors.toList());
+  }
+
   public OrderDTO updateOrderDTO(Long id, OrderDTO orderDTO) {
     Order existingOrder = orderRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Order not found"));

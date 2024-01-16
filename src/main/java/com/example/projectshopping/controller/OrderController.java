@@ -48,6 +48,12 @@ public class OrderController {
         orderService.updateOrderDTO(orderId, orderDTO);
         return "redirect:/orders";
     }
+    @GetMapping("/user/{userId}")
+    public String listOrdersByUser(@PathVariable long userId, Model model) {
+        List<OrderDTO> orders = orderService.findAllOrdersByUserId(userId);
+        model.addAttribute("orders", orders);
+        return "orders_by_user";
+    }
 
 }
 

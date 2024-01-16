@@ -30,14 +30,16 @@ public class UserService {
     }
 
     public Optional<UserDTO> findUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        return user != null ? Optional.of(convertToUserDTO(user)) : Optional.empty();
+        return userRepository.findByEmail(email)
+                .map(this::convertToUserDTO);
     }
 
     public Optional<UserDTO> findUserByUsername(String username) {
-        User user = userRepository.findByUsernameIgnoreCaseContaining(username);
-        return user != null ? Optional.of(convertToUserDTO(user)) : Optional.empty();
+        return userRepository.findByUsernameIgnoreCaseContaining(username)
+                .map(this::convertToUserDTO);
     }
+
+
 
     public UserDTO saveUser(UserDTO userDTO) {
         User user = convertToUser(userDTO);
