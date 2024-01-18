@@ -26,7 +26,7 @@ public class UserController {
     public String listUsers(Model model) {
         List<UserDTO> users = userService.findAllUsers();
         model.addAttribute("users", users);
-        return "users/list"; // Zmieniona nazwa na "user_list"
+        return "users_list"; // Zmieniona nazwa na "user_list"
     }
 
     @GetMapping("/edit/{id}")

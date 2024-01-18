@@ -59,22 +59,21 @@ public class ProductService {
 
     private Product convertToProduct(ProductDTO productDTO) {
         Product product = new Product();
-        product.setId(productDTO.getId());
-        product.setTitle(productDTO.getTitle());
-        product.setDescription(productDTO.getDescription());
-        product.setMiniature(productDTO.getMiniature());
-        product.setPrice(productDTO.getPrice());
-        product.setProductType(productDTO.getProductType());
+        product.setId(productDTO.id());
+        product.setTitle(productDTO.title());
+        product.setDescription(productDTO.description());
+        product.setMiniature(productDTO.miniature());
+        product.setPrice(productDTO.price());
+        product.setProductType(productDTO.productType());
 
         AuthorEmbeddable author = new AuthorEmbeddable();
-        author.setId(productDTO.getAuthorId());
-
+        author.setId(productDTO.authorId());
         product.setAuthor(author);
 
-
         CategoryEmbeddable category = new CategoryEmbeddable();
-        category.setId(productDTO.getCategoryId());
+        category.setId(productDTO.categoryId());
         product.setCategory(category);
 
         return product;
-}}
+    }
+}
