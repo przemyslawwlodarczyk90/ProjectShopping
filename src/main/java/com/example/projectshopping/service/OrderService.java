@@ -70,7 +70,7 @@ public class OrderService {
 
     return OrderDTO.builder()
             .id(order.getId())
-            .userId(order.getUser().getId())
+            .userId(order.getAccountHolder().getId())
             .orderStatus(order.getOrderStatus().name())
             .dateCreated(order.getDateCreated())
             .sentAt(order.getSentAt())

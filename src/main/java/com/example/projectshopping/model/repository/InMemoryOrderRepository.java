@@ -17,10 +17,9 @@ class InMemoryOrderRepository implements OrderRepository {
   @Override
   public List<Order> findAllOrdersByUserId(long userId) {
     return orders.values().stream()
-            .filter(order -> order.getUser() != null && order.getUser().getId() == userId)
+            .filter(order -> order.getAccountHolder() != null && order.getAccountHolder().getId() == userId)
             .collect(Collectors.toList());
   }
-
   @Override
   public List<Order> findAllByOrderStatus(OrderStatus orderStatus) {
     return orders.values().stream()
